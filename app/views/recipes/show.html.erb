@@ -1,0 +1,9 @@
+<h1><%= @recipe.name %></h2>
+<p><%= "Recipe Complexity Level: #{@recipe.complexity} " %></p>
+<p><%= "Recipe Type: #{@recipe.genre} " %></p>
+<section id= "ingredients">
+<h2>Ingredients</h2>
+<% @recipe.ingredients.each do |ingredient| %>
+  <p><%= ingredient.name %>: $<%= ingredient.cost %></p>
+<% end %>
+</section>
