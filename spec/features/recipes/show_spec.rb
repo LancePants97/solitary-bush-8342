@@ -29,4 +29,33 @@ RSpec.describe "the recipes show page" do
       expect(page).to_not have_content(@ingredient2.name)
     end
   end
+
+  it "displays another recipe's attributes and ingredients" do
+    visit "/recipes/#{@recipe2.id}"
+
+    expect(page).to have_content(@recipe2.name)
+    expect(page).to have_content("Recipe Complexity Level: #{@recipe2.complexity}")
+    expect(page).to have_content("Recipe Type: #{@recipe2.genre}")
+
+    within("#ingredients") do
+      expect(page).to have_content(@ingredient1.name)
+      expect(page).to have_content(@ingredient2.name)
+      expect(page).to_not have_content(@ingredient3.name)
+    end
+  end
+
+  # User Story 3
+  it "displays the total cost of all included ingredients" do
+    visit "/recipes/#{@recipe1.id}"
+
+    recipe1_cost = @ingredient1.cost + @ingredient3.cost 
+    expect(page).to have_content("Total Recipe Cost: $#{recipe1_cost}")
+  end
+
+  it "displays the total cost of all included ingredients of another recipe" do
+    visit "/recipes/#{@recipe2.id}"
+
+    recipe1_cost = @ingredient1.cost + @ingredient2.cost 
+    expect(page).to have_content("Total Recipe Cost: $#{recipe1_cost}")
+  end
 end
